@@ -11,7 +11,7 @@ import (
 
 func main() {
 	s := "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
-	tokens := strings.Split(strings.Replace(s, ",", "", -1), " ")
+	tokens := strings.Split(strings.Replace(strings.Trim(s, "."), ",", "", -1), " ")
 
 	counts := make([]int, 0, len(tokens))
 	for _, token := range tokens {
