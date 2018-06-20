@@ -20,10 +20,10 @@ func charNgram(s string, n int) []string {
 		}
 	}
 
-	return set2Slice2(slice2set2(ss))
+	return set2Slice(slice2set(ss))
 }
 
-func slice2set2(ss []string) map[string]struct{} {
+func slice2set(ss []string) map[string]struct{} {
 	set := make(map[string]struct{})
 	for _, s := range ss {
 		set[s] = struct{}{}
@@ -31,7 +31,7 @@ func slice2set2(ss []string) map[string]struct{} {
 	return set
 }
 
-func set2Slice2(set map[string]struct{}) []string {
+func set2Slice(set map[string]struct{}) []string {
 	ss := make([]string, 0, len(set))
 	for k := range set {
 		ss = append(ss, k)
@@ -49,17 +49,7 @@ func contains(ss []string, v string) bool {
 }
 
 func union(x, y []string) []string {
-	m := make(map[string]int)
-
-	for _, v := range append(x, y...) {
-		m[v] = 0
-	}
-
-	result := make([]string, 0, len(m))
-	for k := range m {
-		result = append(result, k)
-	}
-	return result
+	return set2Slice(slice2set(append(x, y...)))
 }
 
 func intersection(x, y []string) []string {
