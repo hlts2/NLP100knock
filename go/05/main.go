@@ -23,6 +23,22 @@ func wordNgram(tokens []string, n int) [][]string {
 	return ss
 }
 
+func slice2map(ss []string) map[string]struct{} {
+	m := make(map[string]struct{})
+	for _, v := range ss {
+		m[v] = struct{}{}
+	}
+	return m
+}
+
+func map2Slice(m map[string]struct{}) []string {
+	ss := make([]string, 0, len(m))
+	for k := range m {
+		ss = append(ss, k)
+	}
+	return map2Slice(slice2map(ss))
+}
+
 func runeSlice2StringSlice(runes []rune) []string {
 	ss := make([]string, 0, len(runes))
 
