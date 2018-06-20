@@ -52,7 +52,7 @@ func union(x, y []string) []string {
 	return set2Slice(slice2set(append(x, y...)))
 }
 
-func intersection(x, y []string) []string {
+func product(x, y []string) []string {
 	var l int
 	if len(x) > len(y) {
 		l = len(x)
@@ -72,7 +72,7 @@ func intersection(x, y []string) []string {
 	return ans
 }
 
-func setdifference(x, y []string) []string {
+func difference(x, y []string) []string {
 	ans := make([]string, 0, len(x))
 
 	for _, vx := range x {
@@ -104,11 +104,11 @@ func main() {
 	fmt.Println(union(x, y))
 
 	// 積集合
-	fmt.Println(intersection(x, y))
+	fmt.Println(product(x, y))
 
 	// 差集合
-	fmt.Println(setdifference(x, y)) // xからy要素を除く
-	fmt.Println(setdifference(y, x)) // yからx要素を除く
+	fmt.Println(difference(x, y)) // xからy要素を除く
+	fmt.Println(difference(y, x)) // yからx要素を除く
 
 	// 「se」を含むか、否か
 	fmt.Println(contains(x, "se"))
