@@ -55,9 +55,9 @@ func union(x, y []string) []string {
 func product(x, y []string) []string {
 	var l int
 	if len(x) > len(y) {
-		l = len(x)
-	} else {
 		l = len(y)
+	} else {
+		l = len(x)
 	}
 	ans := make([]string, 0, l)
 
