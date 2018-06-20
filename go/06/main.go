@@ -3,7 +3,9 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func charNgram(s string, n int) []string {
 	runes := []rune(s)
@@ -18,6 +20,22 @@ func charNgram(s string, n int) []string {
 		}
 	}
 
+	return set2Slice2(slice2set2(ss))
+}
+
+func slice2set2(ss []string) map[string]struct{} {
+	set := make(map[string]struct{})
+	for _, s := range ss {
+		set[s] = struct{}{}
+	}
+	return set
+}
+
+func set2Slice2(set map[string]struct{}) []string {
+	ss := make([]string, 0, len(set))
+	for k := range set {
+		ss = append(ss, k)
+	}
 	return ss
 }
 
@@ -27,17 +45,13 @@ func contains(ss []string, v string) bool {
 			return true
 		}
 	}
-
 	return false
 }
 
 func union(x, y []string) []string {
-	m := make(map[string]int, len(x)+len(y))
-	for _, v := range x {
-		m[v] = 0
-	}
+	m := make(map[string]int)
 
-	for _, v := range y {
+	for _, v := range append(x, y...) {
 		m[v] = 0
 	}
 
@@ -49,50 +63,42 @@ func union(x, y []string) []string {
 }
 
 func intersection(x, y []string) []string {
-	m := make(map[string]int, len(x)+len(y))
-
-	for _, v := range x {
-		m[v]++
-	}
-
-	for _, v := range y {
-		m[v]++
-	}
-
 	var l int
-	for _, v := range m {
-		if v > 1 {
-			l++
+	if len(x) > len(y) {
+		l = len(x)
+	} else {
+		l = len(y)
+	}
+	ans := make([]string, 0, l)
+
+	for _, xv := range x {
+		for _, yv := range y {
+			if xv == yv {
+				ans = append(ans, xv)
+				break
+			}
 		}
 	}
-
-	result := make([]string, 0, l)
-	for k, v := range m {
-		if v > 1 {
-			result = append(result, k)
-		}
-	}
-
-	return result
+	return ans
 }
 
 func setdifference(x, y []string) []string {
-	m := make(map[string]int, len(x))
+	ans := make([]string, 0, len(x))
 
-	for _, v := range x {
-		m[v] = 0
+	for _, vx := range x {
+		flg := false
+		for _, vy := range y {
+			if vx == vy {
+				flg = true
+				break
+			}
+		}
+
+		if !flg {
+			ans = append(ans, vx)
+		}
 	}
-
-	for _, v := range y {
-		delete(m, v)
-	}
-
-	result := make([]string, 0, len(m))
-	for v := range m {
-		result = append(result, v)
-	}
-
-	return result
+	return ans
 }
 
 func main() {
